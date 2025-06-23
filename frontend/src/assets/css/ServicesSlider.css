@@ -1,0 +1,71 @@
+.services-slider-container {
+  padding: 2rem;
+  background: #121c2d;
+}
+
+.service-card {
+  height: 350px;
+  border-radius: 20px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover {
+  transform: scale(1.03);
+}
+
+.service-overlay {
+  position: absolute;
+  bottom: 0;
+  padding: 1.5rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  width: 100%;
+  color: white;
+}
+
+.service-overlay h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.read-more {
+  color: #d7fb00;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.read-more span {
+  background: #d7fb00;
+  color: #000;
+  padding: 2px 6px;
+  border-radius: 50%;
+  margin-left: 8px;
+  font-weight: bold;
+  font-size: 0.75rem;
+}
+/* Swiper Pagination */
+/* .swiper-pagination-bullet {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  gap: 10px;
+} */
+
+.swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  background-color: #3a3f52; /* Dark default background */
+  border-radius: 50%;
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  width: 30px;
+  border-radius: 10px;
+  background-color: #d4ff00; /* Neon green-yellow */
+}

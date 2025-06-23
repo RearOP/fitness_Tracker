@@ -1,0 +1,345 @@
+.fitness-analytics {
+  font-family: "Arial", sans-serif;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: #ffffff;
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.header h1 {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+  text-shadow: 0 0 20px rgba(205, 255, 0, 0.3);
+  animation: fadeInDown 1s ease;
+}
+
+.header .subtitle {
+  font-size: 1.2rem;
+  color: #d7fb00;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  animation: fadeInUp 1s ease 0.2s both;
+}
+
+.stats-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(205, 255, 0, 0.2);
+  border-radius: 15px;
+  padding: 30px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  animation: fadeInUp 0.6s ease both;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  border-color: #d7fb00;
+  box-shadow: 0 10px 30px rgba(205, 255, 0, 0.2);
+}
+
+.stat-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(205, 255, 0, 0.1),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.stat-card:hover::before {
+  left: 100%;
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #d7fb00;
+  margin-bottom: 10px;
+}
+
+.stat-label {
+  font-size: 1rem;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.charts-section {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.chart-container {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(205, 255, 0, 0.2);
+  border-radius: 15px;
+  padding: 30px;
+  position: relative;
+  animation: fadeIn 0.8s ease;
+}
+
+.chart-title {
+  font-size: 1.5rem;
+  color: #d7fb00;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.progress-rings {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 300px;
+}
+
+.ring-container {
+  text-align: center;
+}
+
+.progress-ring {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 15px;
+  position: relative;
+}
+
+.ring-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #d7fb00;
+}
+
+.ring-label {
+  color: #ffffff;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.workout-history {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(205, 255, 0, 0.2);
+  border-radius: 15px;
+  padding: 30px;
+  margin-bottom: 30px;
+  animation: fadeIn 1s ease;
+}
+
+.workout-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  animation: slideInLeft 0.5s ease both;
+}
+
+.workout-item:hover {
+  background: rgba(205, 255, 0, 0.05);
+  padding-left: 10px;
+  transform: translateX(5px);
+}
+
+.workout-item:last-child {
+  border-bottom: none;
+}
+
+.workout-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.workout-name {
+  color: #d7fb00;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.workout-date {
+  color: #ffffff;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.workout-stats {
+  text-align: right;
+}
+
+.workout-duration {
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.workout-calories {
+  color: #d7fb00;
+  font-size: 0.9rem;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 30px;
+  animation: fadeInUp 1.2s ease;
+}
+
+.btn {
+  padding: 15px 30px;
+  border: none;
+  border-radius: 50px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary {
+  background: #d7fb00;
+  color: #1a1a2e;
+}
+
+.btn-primary:hover {
+  background: #b8e600;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(205, 255, 0, 0.3);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #d7fb00;
+  border: 2px solid #d7fb00;
+}
+
+.btn-secondary:hover {
+  background: #d7fb00;
+  color: #1a1a2e;
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+.custom-tooltip {
+  background: rgba(26, 26, 46, 0.95);
+  border: 1px solid #d7fb00;
+  border-radius: 8px;
+  padding: 12px;
+  color: #ffffff;
+}
+
+.tooltip-label {
+  color: #d7fb00;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .charts-section {
+    grid-template-columns: 1fr;
+  }
+
+  .progress-rings {
+    flex-direction: column;
+    height: auto;
+    gap: 20px;
+  }
+
+  .header h1 {
+    font-size: 2.5rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+}

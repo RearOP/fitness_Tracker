@@ -1,0 +1,207 @@
+/* External CSS for Nutrition Log */
+.nutrition-body {
+  background: linear-gradient(135deg, #1a202c 0%, #2d3748 50%, #000000 100%);
+  min-height: 100vh;
+  color: white;
+  /* font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; */
+}
+
+.header-bg {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #4a5568;
+}
+
+.gradient-text {
+  background: linear-gradient(45deg, #d7fb00, #22c55e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.btn-primary-custom {
+  background: #d7fb00;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(132, 204, 22, 0.2);
+}
+
+.btn-primary-custom:hover {
+  background: #65a30d;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(132, 204, 22, 0.3);
+}
+
+.control-card {
+  background: rgba(45, 55, 72, 0.5);
+  backdrop-filter: blur(10px);
+  border: 1px solid #4a5568;
+  border-radius: 12px;
+}
+
+.summary-card {
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid;
+  transition: all 0.3s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.calories-card {
+  background: linear-gradient(
+    135deg,
+    rgba(132, 204, 22, 0.2),
+    rgba(34, 197, 94, 0.2)
+  );
+  border-color: rgba(132, 204, 22, 0.3);
+}
+
+.protein-card {
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.2),
+    rgba(6, 182, 212, 0.2)
+  );
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.carbs-card {
+  background: linear-gradient(
+    135deg,
+    rgba(251, 146, 60, 0.2),
+    rgba(239, 68, 68, 0.2)
+  );
+  border-color: rgba(251, 146, 60, 0.3);
+}
+
+.fat-card {
+  background: linear-gradient(
+    135deg,
+    rgba(168, 85, 247, 0.2),
+    rgba(236, 72, 153, 0.2)
+  );
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+.meal-card {
+  background: rgba(45, 55, 72, 0.5);
+  backdrop-filter: blur(10px);
+  border: 1px solid #4a5568;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.meal-card:hover {
+  border-color: rgba(132, 204, 22, 0.5);
+  transform: translateY(-3px);
+}
+
+.meal-header {
+  /* background: linear-gradient(135deg, #2d3748, #4a5568); */
+  border-bottom: 1px solid #4a5568;
+}
+
+.food-item {
+  background: rgba(74, 85, 104, 0.3);
+  border: 1px solid #4a5568;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.food-item:hover {
+  background: rgba(74, 85, 104, 0.5);
+}
+
+.notes-section {
+  background: rgba(132, 204, 22, 0.1);
+  border: 1px solid rgba(132, 204, 22, 0.2);
+  border-radius: 8px;
+}
+
+.icon-bg {
+  background: #2d3748;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.custom-input {
+  background: transparent;
+  color: white;
+  border: none;
+  outline: none;
+}
+
+.custom-input:focus {
+  box-shadow: 0 0 0 2px #d7fb00;
+}
+
+.custom-select {
+  background: #2d3748;
+  /* backdrop-filter: blur(10px); */
+  border: 1px solid #4a5568;
+  color: white;
+  border-radius: 8px;
+}
+
+.custom-select:focus {
+  border-color: #d7fb00;
+  box-shadow: 0 0 0 2px rgba(132, 204, 22, 0.2);
+}
+
+.btn-edit {
+  background: rgba(132, 204, 22, 0.2);
+  border: none;
+  border-radius: 8px;
+  color: #d7fb00;
+  transition: all 0.3s ease;
+}
+
+.btn-edit:hover {
+  background: rgba(132, 204, 22, 0.3);
+  color: #d7fb00;
+}
+
+.btn-delete {
+  background: rgba(239, 68, 68, 0.2);
+  border: none;
+  border-radius: 8px;
+  color: #ef4444;
+  transition: all 0.3s ease;
+}
+
+.btn-delete:hover {
+  background: rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.empty-icon {
+  font-size: 4rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .gradient-text {
+    font-size: 2rem;
+  }
+
+  .summary-card {
+    margin-bottom: 1rem;
+  }
+
+  .meal-totals {
+    text-align: center;
+  }
+}
