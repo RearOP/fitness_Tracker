@@ -28,6 +28,7 @@ import AdminAnalytics from "./main/admin/AdminAnalytics";
 import AdminUsers from "./main/admin/AdminUsers";
 import AdminModeration from "./main/admin/AdminModeration";
 import AdminInbox from "./main/admin/AdminInbox";
+import InsertProgress from "./main/InsertProgress";
 
 function App() {
   return (
@@ -102,6 +103,14 @@ function App() {
           element={
             <PrivateRoutes>
               <AddNutrition />
+            </PrivateRoutes>
+          }
+        />
+        <Route
+          path="/add-progress"
+          element={
+            <PrivateRoutes>
+              <InsertProgress />
             </PrivateRoutes>
           }
         />

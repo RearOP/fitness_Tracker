@@ -16,107 +16,37 @@ import { Link } from "react-router-dom";
 
 import "../assets/css/Shownutritions.css";
 import Scrollingsticker from "./components/Scrollingsticker";
+import axios from "axios";
 
 const ShowNutritionLog = () => {
-  // Mock data - replace with actual API calls
-  const [nutritionLogs, setNutritionLogs] = useState([
-    {
-      _id: "1",
-      date: new Date("2025-06-22"),
-      mealType: "breakfast",
-      items: [
-        {
-          name: "Oatmeal",
-          quantity: "1 cup",
-          calories: 150,
-          protein: 5,
-          carbs: 27,
-          fat: 3,
-        },
-        {
-          name: "Banana",
-          quantity: "1 medium",
-          calories: 105,
-          protein: 1,
-          carbs: 27,
-          fat: 0,
-        },
-        {
-          name: "Almonds",
-          quantity: "1 oz",
-          calories: 160,
-          protein: 6,
-          carbs: 6,
-          fat: 14,
-        },
-      ],
-      notes: "Post-workout breakfast",
-    },
-    {
-      _id: "2",
-      date: new Date("2025-06-22"),
-      mealType: "lunch",
-      items: [
-        {
-          name: "Grilled Chicken",
-          quantity: "6 oz",
-          calories: 280,
-          protein: 53,
-          carbs: 0,
-          fat: 6,
-        },
-        {
-          name: "Brown Rice",
-          quantity: "1 cup",
-          calories: 216,
-          protein: 5,
-          carbs: 45,
-          fat: 2,
-        },
-        {
-          name: "Broccoli",
-          quantity: "1 cup",
-          calories: 25,
-          protein: 3,
-          carbs: 5,
-          fat: 0,
-        },
-      ],
-      notes: "High protein lunch",
-    },
-    {
-      _id: "3",
-      date: new Date("2025-06-21"),
-      mealType: "dinner",
-      items: [
-        {
-          name: "Salmon",
-          quantity: "5 oz",
-          calories: 350,
-          protein: 45,
-          carbs: 0,
-          fat: 18,
-        },
-        {
-          name: "Sweet Potato",
-          quantity: "1 medium",
-          calories: 100,
-          protein: 2,
-          carbs: 23,
-          fat: 0,
-        },
-        {
-          name: "Asparagus",
-          quantity: "1 cup",
-          calories: 20,
-          protein: 2,
-          carbs: 4,
-          fat: 0,
-        },
-      ],
-      notes: "Omega-3 rich dinner",
-    },
-  ]);
+  const API_URL = "http://localhost:3000";
+  const [nutritionLogs, setNutritionLogs] = useState([]);
+  const [userId, setUserId] = useState();
+  async function fetch_User() {
+    const newRes = await axios.get(`${API_URL}/check`, {
+      withCredentials: true,
+    });
+    setUserId(newRes.data.user.id);
+    // console.log(newRes.data.user.id);
+  }
+
+  async function fetch_nutritions() {
+    if (!userId) return;
+    const res = await axios.get(`${API_URL}/nutritions/fetch/${userId}`, {
+      withCredentials: true,
+    });
+    setNutritionLogs(res.data);
+    // console.log(res.data);
+  }
+  useEffect(() => {
+    fetch_User();
+  }, []);
+
+  useEffect(() => {
+    if (userId) {
+      fetch_nutritions();
+    }
+  }, [userId]);
 
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().split("T")[0]
@@ -470,7 +400,7 @@ const ShowNutritionLog = () => {
                                 className="fw-semibold"
                                 style={{ color: "#84cc16" }}
                               >
-                                Note:{" "}
+                                Note:
                               </span>
                               <span className="text-light">{log.notes}</span>
                             </p>

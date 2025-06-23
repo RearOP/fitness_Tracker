@@ -3,10 +3,10 @@ const router = express.Router();
 const IsloggedIn = require("../middlewares/IsloggedIn");
 const nutritionModel = require("../models/nutrition_model");
 
-// GET all nutrition logs for user
-router.get("/", IsloggedIn, async (req, res) => {
+
+router.get("/fetch/:userid", IsloggedIn, async (req, res) => {
   try {
-    const logs = await nutritionModel.find({ user: req.user.id }).sort({ date: -1 });
+    const logs = await nutritionModel.find({ user: req.params.userid }).sort({ date: -1 });
     res.json(logs);
   } catch (err) {
     res.status(500).json({ error: "Server error" });
