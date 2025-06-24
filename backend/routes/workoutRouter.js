@@ -3,9 +3,28 @@ const router = express.Router();
 const IsloggedIn = require("../middlewares/IsloggedIn");
 const workoutModel = require("../models/workout_model")
 
-router.get("/", IsloggedIn, async (req, res) => {
+router.get("/viewWorkout", IsloggedIn, async (req, res) => {
   try {
-    const workouts = await workoutModel.find({ user: req.user.id }).sort({ date: -1 });
+    const workouts = await workoutModel.find().sort({ date: -1 });
+    res.json(workouts);
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+router.get("/fetchupdate/:id", IsloggedIn, async (req, res) => {
+  try {
+    const record = await workoutModel.findById(req.params.id);
+    if (!record) return res.status(404).json({ error: "Progress not found" });
+    res.json(record);
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+router.get("/userWorkout/:id", IsloggedIn, async (req, res) => {
+  try {
+    const workouts = await workoutModel.find({user : req.params.id}).sort({ date: -1 });
     res.json(workouts);
   } catch (err) {
     res.status(500).json({ error: "Server error" });
@@ -55,7 +74,7 @@ router.put("/update-workout/:id", IsloggedIn, async (req, res) => {
 });
 
 // DELETE a workout
-router.delete("/:id", IsloggedIn, async (req, res) => {
+router.delete("/deleteworkouts/:id", IsloggedIn, async (req, res) => {
   try {
     const deleted = await workoutModel.findOneAndDelete({ _id: req.params.id, user: req.user.id });
     if (!deleted) return res.status(404).json({ error: "Workout not found" });

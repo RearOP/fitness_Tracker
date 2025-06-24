@@ -20,6 +20,7 @@ import Dashboard from "./main/Dashboard";
 import Nutrition from "./main/ShowNutritionLog";
 import AddNutrition from "./main/NutritionLog";
 import Progress from "./main/Progress";
+import EditProgress from "./main/EditProgress";
 
 import AdminDashboard from "./main/admin/AdminDashboard";
 import AdminWorkouts from "./main/admin/AdminWorkouts";
@@ -111,6 +112,14 @@ function App() {
           element={
             <PrivateRoutes>
               <InsertProgress />
+            </PrivateRoutes>
+          }
+        />
+        <Route
+          path="/edit-progress/:id"
+          element={
+            <PrivateRoutes>
+              <EditProgress />
             </PrivateRoutes>
           }
         />

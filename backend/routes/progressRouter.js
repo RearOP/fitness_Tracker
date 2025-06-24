@@ -31,8 +31,18 @@ router.post("/add-progress", verifyToken, async (req, res) => {
   }
 });
 
+router.get("/fetchupdate/:id", verifyToken, async (req, res) => {
+  try {
+    const record = await ProgressModel.findById(req.params.id);
+    if (!record) return res.status(404).json({ error: "Progress not found" });
+    res.json(record);
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 // PUT update a progress entry by ID
-router.put("/:id", verifyToken, async (req, res) => {
+router.put("/edit-progress/:id", verifyToken, async (req, res) => {
   try {
     const updated = await ProgressModel.findOneAndUpdate(
       { _id: req.params.id, userId: req.user.id },
@@ -48,7 +58,7 @@ router.put("/:id", verifyToken, async (req, res) => {
 });
 
 // DELETE a progress entry
-router.delete("/:id", verifyToken, async (req, res) => {
+router.delete("/deleteProgress/:id", verifyToken, async (req, res) => {
   try {
     const deleted = await ProgressModel.findOneAndDelete({ _id: req.params.id, userId: req.user.id });
 

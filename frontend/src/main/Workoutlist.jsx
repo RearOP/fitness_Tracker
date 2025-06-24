@@ -6,10 +6,10 @@ import axios from "axios";
 
 export default function Workoutlist() {
   const [workouts, setWorkouts] = useState([]);
-  let API_URL = "http://localhost:3000/";
+  let API_URL = "http://localhost:3000";
 
   async function getworkout() {
-    const res = await axios.get(`${API_URL}workouts/`, {
+    const res = await axios.get(`${API_URL}/workouts/viewWorkout`, {
       withCredentials: true,
     });
     // console.log(res.data);
@@ -50,7 +50,7 @@ export default function Workoutlist() {
 
       <div className="container my-5">
         <div className="row">
-          <div className="col-md-2">
+          <div className="d-flex" style={{justifyContent:"flex-end"}}>
             <Link to="/add-workout" className="btn-default">
               Add Workout
             </Link>

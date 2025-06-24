@@ -2,10 +2,15 @@ import React, { useState, useEffect } from "react";
 import "../assets/css/Profile.css";
 import Scrollingsticker from "./components/Scrollingsticker";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { FaTrash } from "react-icons/fa"; 
+import ProgressComp from "./components/ProgressComp";
+import NutritionComp from "./components/NutritionComp";
+
 const Profile = () => {
   const API_URL = "http://localhost:3000";
   // State management
-  const [activeTab, setActiveTab] = useState("Recipes");
+  const [activeTab, setActiveTab] = useState("Workouts");
   const [user, setUser] = useState([]);
 
   const [name, setName] = useState("");
@@ -20,43 +25,10 @@ const Profile = () => {
   const [profilePic, setProfilePic] = useState();
   const [showModal, setShowModal] = useState({ show: false, image: "" });
 
-  const tabs = ["Recipes", "Favorites", "Collections", "Following"];
+  const [workouts, setWorkouts] = useState([]);
 
-  // Sample recipe data
-  const recipes = [
-    {
-      id: 1,
-      title: "Delicious Pasta",
-      description:
-        "A mouth-watering pasta dish with fresh ingredients and aromatic herbs.",
-      image:
-        "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=300&h=200&fit=crop",
-    },
-    {
-      id: 2,
-      title: "Gourmet Pizza",
-      description:
-        "Crispy crust topped with premium ingredients and melted cheese.",
-      image:
-        "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=300&h=200&fit=crop",
-    },
-    {
-      id: 3,
-      title: "Fresh Salad",
-      description:
-        "A healthy mix of greens, vegetables, and a light vinaigrette dressing.",
-      image:
-        "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300&h=200&fit=crop",
-    },
-    {
-      id: 4,
-      title: "Spicy Burger",
-      description:
-        "Juicy beef patty with spicy sauce and fresh toppings on a toasted bun.",
-      image:
-        "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=300&h=200&fit=crop",
-    },
-  ];
+  const tabs = ["Workouts", "Nutritions", "Progress"];
+
   // Handlers
   const handleNameSubmit = async () => {
     try {
@@ -167,7 +139,7 @@ const Profile = () => {
   }, [email]);
 
   // show dynamic data of logged in user
-  const fetchUserData = async () => {
+  const fetchUserDataAndgetworkout = async () => {
     try {
       const res = await axios.get(`${API_URL}/profile/users`, {
         withCredentials: true,
@@ -175,14 +147,36 @@ const Profile = () => {
       setUser(res.data);
       setName(res.data.fullname);
       setEmail(res.data.email);
+      let userId = res.data._id;
+
+      const workRes = await axios.get(
+        `${API_URL}/workouts/userWorkout/${userId}`,
+        {
+          withCredentials: true,
+        }
+      );
+      // Ensure workRes.data is an array
+      setWorkouts(Array.isArray(workRes.data) ? workRes.data : []);
     } catch (err) {
       console.error("user not logged in", err);
+      setWorkouts([]); // Set to empty array on error
     }
   };
 
   useEffect(() => {
-    fetchUserData();
+    fetchUserDataAndgetworkout();
   }, []);
+
+  async function deleteData(delid) {
+    const del = await axios.delete(
+      `${API_URL}/workouts/deleteworkouts/${delid}`,
+      {
+        withCredentials: true,
+      }
+    );
+    fetchUserDataAndgetworkout();
+  }
+
   const CameraIcon = () => (
     <svg
       style={{ width: "20px", height: "20px", color: "#6b7280" }}
@@ -402,24 +396,159 @@ const Profile = () => {
               </button>
             ))}
           </div>
-
-          {/* Recipes Grid */}
-          {/* <div className="recipes-grid">
-          {recipes.map((recipe) => (
-            <div key={recipe.id} className="recipe-card">
-              <img
-                src={recipe.image}
-                alt={recipe.title}
-                className="recipe-image"
-              />
-              <div className="recipe-content">
-                <h3 className="recipe-title">{recipe.title}</h3>
-                <p className="recipe-description">{recipe.description}</p>
-              </div>
-            </div>
-          ))}
-        </div> */}
         </div>
+
+          {/* Tab Content */}
+          {activeTab === "Workouts" ? (
+            <>
+              {/* workouts Grid */}
+              <div className="container my-5">
+                <div className="row">
+                  <div
+                    className="d-flex"
+                    style={{ justifyContent: "flex-end" }}
+                  >
+                    <Link to="/add-workout" className="btn-default">
+                      Add Workout
+                    </Link>
+                  </div>
+                </div>
+                <div
+                  className="row"
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
+                    gap: "30px",
+                    marginTop: "30px",
+                  }}
+                >
+                  {workouts && workouts.length > 0 ? (
+                    workouts.map((item, index) => {
+                      const dateObj = new Date(item.date);
+                      const day = dateObj.getDate();
+                      const month = dateObj.toLocaleString("default", {
+                        month: "short",
+                      });
+                      const year = dateObj.getFullYear();
+
+                      // Calculate total duration or total sets from exercises
+                      const totalDuration =
+                        item.exercises?.reduce(
+                          (sum, ex) => sum + (ex.duration || 0),
+                          0
+                        ) || 0;
+                      const totalSets =
+                        item.exercises?.reduce(
+                          (sum, ex) => sum + (ex.sets || 0),
+                          0
+                        ) || 0;
+
+                      return (
+                        <div key={index} className="card">
+                          <div className="wrapper war">
+                            <div className="header">
+                              <div className="date">
+                                <span
+                                  className="day"
+                                  style={{ marginRight: "0.5rem" }}
+                                >
+                                  {day}
+                                </span>
+                                <span
+                                  className="month"
+                                  style={{ marginRight: "0.5rem" }}
+                                >
+                                  {month}
+                                </span>
+                                <span className="year">{year}</span>
+                              </div>
+                              <div
+                                className="difficulty-badge"
+                                style={{ borderColor: "#4CAF50" }}
+                              >
+                                {item.type}
+                              </div>
+                            </div>
+
+                            <div className="data">
+                              <div className="content">
+                                <span className="author">
+                                  Your Workout Plan
+                                </span>
+                                <h1 className="title">
+                                  <Link to={`/workout-details/${item._id}`}>
+                                    {item.title}
+                                  </Link>
+                                </h1>
+
+                                <div className="workout-stats">
+                                  <div className="stat-item">
+                                    <span className="stat-label">
+                                      Total Duration
+                                    </span>
+                                    <span className="stat-value">
+                                      {totalDuration} min
+                                    </span>
+                                  </div>
+                                  <div className="stat-item">
+                                    <span className="stat-label">
+                                      Total Sets
+                                    </span>
+                                    <span className="stat-value">
+                                      {totalSets}
+                                    </span>
+                                  </div>
+                                </div>
+
+                                <p className="text">
+                                  {item.exercises?.[0]?.notes ||
+                                    "No notes available."}
+                                </p>
+                                <div className="d-flex gap-3">
+                                  <Link
+                                    to={`/workout-details/${item._id}`}
+                                    className="button"
+                                  >
+                                    View Workout
+                                  </Link>
+                                  <Link
+                                    to={`/edit-workout/${item._id}`}
+                                    className="button"
+                                  >
+                                    Edit Workout
+                                  </Link>
+                                  <button
+                                    onClick={() => deleteData(item._id)}
+                                    className="btn btn-delete p-2"
+                                  >
+                                    <FaTrash />
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <div className="no-workouts">
+                      <p>
+                        No workouts found. Start by adding your first workout!
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </>
+          ) : activeTab === "Nutritions" ? (
+            <div className="tab-content my-5">
+              <NutritionComp/>
+            </div>
+          ) : activeTab === "Progress" ? (
+            <div className="tab-content my-5">
+              <ProgressComp/>
+            </div>
+          ) : null}
       </div>
     </>
   );
