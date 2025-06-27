@@ -53,9 +53,9 @@ const Header = () => {
         const auth = await axios.get(`${API_URL}/check`, {
           withCredentials: true,
         });
-        if (auth.status === 200 && window.location.pathname !== "/") {
-          navigate("/");
-        }
+        // if (auth.status === 200 && window.location.pathname !== "/") {
+        //   navigate("/");
+        // }
         setIsLoggedIn(auth.data.loggedIn);
         setAdmin(auth.data.role === "admin");
         const userId = auth.data.user.id;
@@ -297,7 +297,7 @@ const Header = () => {
                         <div className="notifications-list">
                           {notifications.map((n) => {
                             const Icon = iconMap[n.type] || Bell;
-                            if (n.read) return "No notifications yet.";
+                            if (n.read) return null;
                             return (
                               <div
                                 key={n._id}
