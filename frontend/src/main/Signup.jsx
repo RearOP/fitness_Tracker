@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
-const apiurl = "http://localhost:3000/auth";
+const apiurl = "http://localhost:3000/";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -33,9 +33,9 @@ const Signup = () => {
   });
 
   const handleSubmit = async (values) => {
-    console.log("Form submitted:", values);
+    // console.log("Form submitted:", values);
     try {
-      const res = await axios.post(`${apiurl}/register`, values, {
+      const res = await axios.post(`${apiurl}auth/register`, values, {
         withCredentials: true, //this is critical for setting cookies!
       });
       if (res.status === 200) {

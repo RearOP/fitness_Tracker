@@ -16,7 +16,6 @@ import WorkoutDetails from "./main/WorkoutDetails";
 import AddWorkout from "./main/AddWorkout";
 import EditWorkout from "./main/EditWorkout";
 import PrivateRoutes from "./main/Private";
-import Dashboard from "./main/Dashboard";
 import Nutrition from "./main/ShowNutritionLog";
 import AddNutrition from "./main/NutritionLog";
 import Progress from "./main/Progress";
@@ -80,14 +79,6 @@ function App() {
           element={
             <PrivateRoutes>
               <EditWorkout />
-            </PrivateRoutes>
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoutes>
-              <Dashboard />
             </PrivateRoutes>
           }
         />

@@ -6,6 +6,7 @@ import axios from "axios";
 
 export default function Workoutlist() {
   const [workouts, setWorkouts] = useState([]);
+  const [search, setSearch] = useState();
   let API_URL = "http://localhost:3000";
 
   async function getworkout() {
@@ -49,8 +50,22 @@ export default function Workoutlist() {
       <Scrollingsticker />
 
       <div className="container my-5">
-        <div className="row">
-          <div className="d-flex" style={{justifyContent:"flex-end"}}>
+        <div className="row align-items-center">
+          <div className="col-md-10 contact-form">
+            <div className="form-group">
+              <input
+                type="text"
+                name="title"
+                className="form-control"
+                onChange={(e) => {
+                  e.target.value;
+                  setSearch(e.target.value);
+                }}
+                placeholder="Search"
+              />
+            </div>
+          </div>
+          <div className="col-md-2">
             <Link to="/add-workout" className="btn-default">
               Add Workout
             </Link>
@@ -65,81 +80,90 @@ export default function Workoutlist() {
             marginTop: "30px",
           }}
         >
-          {workouts.map((item, index) => {
-            const dateObj = new Date(item.date);
-            const day = dateObj.getDate();
-            const month = dateObj.toLocaleString("default", { month: "short" });
-            const year = dateObj.getFullYear();
+          {workouts
+            .filter((item) =>
+              item.title.toLowerCase().includes(search?.toLowerCase() || "")
+            )
+            .map((item, index) => {
+              const dateObj = new Date(item.date);
+              const day = dateObj.getDate();
+              const month = dateObj.toLocaleString("default", {
+                month: "short",
+              });
+              const year = dateObj.getFullYear();
 
-            // Calculate total duration or total sets from exercises
-            const totalDuration = item.exercises.reduce(
-              (sum, ex) => sum + (ex.duration || 0),
-              0
-            );
-            const totalSets = item.exercises.reduce(
-              (sum, ex) => sum + (ex.sets || 0),
-              0
-            );
+              // Calculate total duration or total sets from exercises
+              const totalDuration = item.exercises.reduce(
+                (sum, ex) => sum + (ex.duration || 0),
+                0
+              );
+              const totalSets = item.exercises.reduce(
+                (sum, ex) => sum + (ex.sets || 0),
+                0
+              );
 
-            return (
-              <div key={index} className="card">
-                <div className="wrapper war">
-                  <div className="header">
-                    <div className="date">
-                      <span className="day" style={{ marginRight: "0.5rem" }}>
-                        {day}
-                      </span>
-                      <span className="month" style={{ marginRight: "0.5rem" }}>
-                        {month}
-                      </span>
-                      <span className="year">{year}</span>
-                    </div>
-                    <div
-                      className="difficulty-badge"
-                      style={{ borderColor: "#4CAF50" }}
-                    >
-                      {item.type}
-                    </div>
-                  </div>
-
-                  <div className="data">
-                    <div className="content">
-                      <span className="author">Your Workout Plan</span>
-                      <h1 className="title">
-                        <Link to={`/workout-details/${item._id}`}>
-                          {item.title}
-                        </Link>
-                      </h1>
-
-                      <div className="workout-stats">
-                        <div className="stat-item">
-                          <span className="stat-label">Total Duration</span>
-                          <span className="stat-value">
-                            {totalDuration} min
-                          </span>
-                        </div>
-                        <div className="stat-item">
-                          <span className="stat-label">Total Sets</span>
-                          <span className="stat-value">{totalSets}</span>
-                        </div>
+              return (
+                <div key={index} className="card">
+                  <div className="wrapper war">
+                    <div className="header">
+                      <div className="date">
+                        <span className="day" style={{ marginRight: "0.5rem" }}>
+                          {day}
+                        </span>
+                        <span
+                          className="month"
+                          style={{ marginRight: "0.5rem" }}
+                        >
+                          {month}
+                        </span>
+                        <span className="year">{year}</span>
                       </div>
-
-                      <p className="text">
-                        {item.exercises[0]?.notes || "No notes available."}
-                      </p>
-
-                      <Link
-                        to={`/workout-details/${item._id}`}
-                        className="button"
+                      <div
+                        className="difficulty-badge"
+                        style={{ borderColor: "#4CAF50" }}
                       >
-                        View Workout
-                      </Link>
+                        {item.type}
+                      </div>
+                    </div>
+
+                    <div className="data">
+                      <div className="content">
+                        <span className="author">Your Workout Plan</span>
+                        <h1 className="title">
+                          <Link to={`/workout-details/${item._id}`}>
+                            {item.title}
+                          </Link>
+                        </h1>
+
+                        <div className="workout-stats">
+                          <div className="stat-item">
+                            <span className="stat-label">Total Duration</span>
+                            <span className="stat-value">
+                              {totalDuration} min
+                            </span>
+                          </div>
+                          <div className="stat-item">
+                            <span className="stat-label">Total Sets</span>
+                            <span className="stat-value">{totalSets}</span>
+                          </div>
+                        </div>
+
+                        <p className="text">
+                          {item.exercises[0]?.notes || "No notes available."}
+                        </p>
+
+                        <Link
+                          to={`/workout-details/${item._id}`}
+                          className="button"
+                        >
+                          View Workout
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
       </div>
     </>

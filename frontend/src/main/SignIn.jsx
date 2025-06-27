@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router";
-const apiurl = "http://localhost:3000/auth";
+const apiurl = "http://localhost:3000/";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const SignIn = () => {
   const handleSubmit = async (values) => {
     // console.log("Login:", values);
     try {
-      const res = await axios.post(`${apiurl}/login`, values, {
+      const res = await axios.post(`${apiurl}auth/login`, values, {
         withCredentials: true, //this is critical for setting cookies!
       });
       if (res.status === 200) {

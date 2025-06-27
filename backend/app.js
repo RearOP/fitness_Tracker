@@ -8,6 +8,7 @@ const profileRouter = require("./routes/profile_Router");
 const workoutRouter = require("./routes/workoutRouter");
 const nutritionRouter = require("./routes/nutritionRouter");
 const progressRouter = require("./routes/progressRouter");
+const notificationRouter = require("./routes/notificationRouter");
 const verifytoken = require("./middlewares/verifytoken");
 
 app.use(express.json());
@@ -26,6 +27,7 @@ app.use("/profile", profileRouter );
 app.use("/workouts", workoutRouter );
 app.use("/nutritions", nutritionRouter );
 app.use("/progress", progressRouter );
+app.use("/notifications", notificationRouter );
 
 
 app.get("/check", verifytoken, (req, res) => {

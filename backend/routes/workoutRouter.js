@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const IsloggedIn = require("../middlewares/IsloggedIn");
 const workoutModel = require("../models/workout_model")
-
+const notificationModel   = require("../models/notifications_model");
 router.get("/viewWorkout", IsloggedIn, async (req, res) => {
   try {
     const workouts = await workoutModel.find().sort({ date: -1 });
@@ -48,15 +48,28 @@ router.get("/detailedWorkout/:id", async (req, res) => {
 // POST create a new workout
 router.post("/add-workout", IsloggedIn, async (req, res) => {
   try {
-    const newWorkout = await workoutModel.create({ ...req.body, user: req.user.id });
+    
+    const newWorkout = await workoutModel.create({
+      ...req.body,
+      user: req.user.id,
+    });
+
     if (!newWorkout) {
       return res.status(400).json({ error: "Failed to create workout" });
     }
-    res.status(201).json(newWorkout);
+
+    await notificationModel.create({
+      userId:  req.user.id,
+      type:    "workout",
+      message: `Great job! Your workout “${newWorkout.title}” has been saved.`,
+    });
+
+    return res.status(201).json(newWorkout);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    return res.status(400).json({ error: err.message });
   }
 });
+
 
 // PUT update a workout
 router.put("/update-workout/:id", IsloggedIn, async (req, res) => {
