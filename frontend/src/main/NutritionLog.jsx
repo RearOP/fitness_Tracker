@@ -7,6 +7,7 @@ import { ToastContainer, toast, Bounce } from "react-toastify";
 
 const NutritionLog = () => {
   const initialValues = {
+    type: "nutrition_log", // Add a valid type value expected by backend
     mealType: "",
     items: [
       {
@@ -20,8 +21,8 @@ const NutritionLog = () => {
     ],
     notes: "",
   };
-
   const validationSchema = Yup.object({
+    type: Yup.string().required(), // Add type validation
     mealType: Yup.string()
       .oneOf(["breakfast", "lunch", "dinner", "snack"])
       .required("Meal type is required"),
@@ -37,7 +38,6 @@ const NutritionLog = () => {
     ),
     notes: Yup.string(),
   });
-
   const handleSubmit = async (values, { resetForm }) => {
     let API_URL = "http://localhost:3000/";
     try {
@@ -49,7 +49,7 @@ const NutritionLog = () => {
         }
       );
       // console.log("Nutrition log saved:", res.data);
-      if (res) {
+      if (res.status === 201) {
         toast.success("Nutrition log created successfully", {
           position: "top-right",
           autoClose: 5000,
@@ -61,11 +61,11 @@ const NutritionLog = () => {
           theme: "dark",
           transition: Bounce,
         });
-        resetForm();
       }
+      resetForm();
     } catch (err) {
-      console.error("Failed to save nutrition log", err.response.data);
-      toast.error("Failed to save nutrition log something is wrong", {
+      console.error("Failed to save nutrition log", err?.response?.data || err.message);
+      toast.error("Failed to save nutrition log. Something went wrong.", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -77,7 +77,8 @@ const NutritionLog = () => {
         transition: Bounce,
       });
     }
-  };
+  }
+
 
   return (
     <>

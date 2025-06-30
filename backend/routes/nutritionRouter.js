@@ -15,9 +15,24 @@ router.get("/fetch/:userid", IsloggedIn, async (req, res) => {
   }
 });
 
+router.get("/fetchAdmin", IsloggedIn, async (req, res) => {
+  try {
+    const logs = await nutritionModel
+      .find()
+      .sort({ date: -1 });
+    res.json(logs);
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 // POST create a nutrition log
 router.post("/add-nutrition", IsloggedIn, async (req, res) => {
   try {
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({ error: "Unauthorized: User not found" });
+    }
+
     const newLog = await nutritionModel.create({
       ...req.body,
       user: req.user.id,
@@ -29,8 +44,8 @@ router.post("/add-nutrition", IsloggedIn, async (req, res) => {
 
     await notifications_model.create({
       userId: req.user.id,
-      type: "nutrition",
-      message: `Great job! Your “${newLog.mealType}” nutrition log has been saved.`,
+      type: "NUTRITION", // Use the correct enum value as defined in your schema
+      message: `Great job! Your “${newLog.mealType || "meal"}” nutrition log has been saved.`,
     });
     return res.status(201).json(newLog);
   } catch (err) {

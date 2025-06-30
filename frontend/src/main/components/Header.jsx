@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import logo from '../../assets/images/logo.svg'
 import {
   Bell,
   X,
@@ -94,7 +95,7 @@ const Header = () => {
         withCredentials: true,
       });
       if (log.status === 200) {
-        if (window.location.pathname === "/") {
+        if (window.location.pathname) {
           window.location.reload();
         } else {
           navigate("/");
@@ -137,7 +138,7 @@ const Header = () => {
         <nav className="navbar navbar-expand-lg">
           <div className="container">
             <Link className="navbar-brand" to="/">
-              <img src="images/logo.svg" alt="Logo" />
+              <img src={logo} alt="Logo" />
             </Link>
             <div className="collapse navbar-collapse main-menu">
               <div className="nav-menu-wrapper">
@@ -199,22 +200,22 @@ const Header = () => {
                             Admin Dashboard
                           </Link>
                         </li>
-                        <li>
+                        {/* <li>
                           <Link className="nav-link" to="/admin/workouts">
                             Manage Workouts
                           </Link>
-                        </li>
-                        <li>
+                        </li> */}
+                        {/* <li>
                           <Link className="nav-link" to="/admin/logs">
                             View Logs
                           </Link>
-                        </li>
+                        </li> */}
                         <li>
                           <Link className="nav-link" to="/admin/analytics">
                             Analytics View
                           </Link>
                         </li>
-                        <li>
+                        {/* <li>
                           <Link className="nav-link" to="/admin/users">
                             User Directory
                           </Link>
@@ -228,7 +229,7 @@ const Header = () => {
                           <Link className="nav-link" to="/admin/inbox">
                             Inbox
                           </Link>
-                        </li>
+                        </li> */}
                       </ul>
                     </li>
                   )}

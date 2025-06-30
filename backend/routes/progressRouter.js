@@ -16,6 +16,15 @@ router.get("/fetch/:id", verifyToken, async (req, res) => {
   }
 });
 
+router.get("/fetchAdmin", verifyToken, async (req, res) => {
+  try {
+    const records = await ProgressModel.find();
+    res.json(records);
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 // POST add a new progress entry
 router.post("/add-progress", verifyToken, async (req, res) => {
   try {

@@ -180,7 +180,8 @@
 
 .workout-item:hover {
   background: rgba(205, 255, 0, 0.05);
-  padding-left: 10px;
+  border-radius: 10px;
+  padding: 10px;
   transform: translateX(5px);
 }
 
