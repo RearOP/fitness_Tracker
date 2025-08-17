@@ -133,7 +133,7 @@ const NutritionLog = () => {
       </div>
 
       <Scrollingsticker />
-      <div className="container mt-5">
+      <div className="container my-5">
         <h2>Add Nutrition Log</h2>
         <div className="contact-form">
           <Formik
