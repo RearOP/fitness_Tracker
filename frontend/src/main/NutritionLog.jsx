@@ -64,7 +64,10 @@ const NutritionLog = () => {
       }
       resetForm();
     } catch (err) {
-      console.error("Failed to save nutrition log", err?.response?.data || err.message);
+      console.error(
+        "Failed to save nutrition log",
+        err?.response?.data || err.message
+      );
       toast.error("Failed to save nutrition log. Something went wrong.", {
         position: "top-right",
         autoClose: 5000,
@@ -77,8 +80,7 @@ const NutritionLog = () => {
         transition: Bounce,
       });
     }
-  }
-
+  };
 
   return (
     <>
@@ -146,11 +148,21 @@ const NutritionLog = () => {
                 {/* Meal Type Select */}
                 <div className="form-group mb-3">
                   <Field as="select" name="mealType" className="form-control">
-                    <option value="" className="bg-dark">Select Meal Type</option>
-                    <option value="breakfast" className="bg-dark">Breakfast</option>
-                    <option value="lunch" className="bg-dark">Lunch</option>
-                    <option value="dinner" className="bg-dark">Dinner</option>
-                    <option value="snack" className="bg-dark">Snack</option>
+                    <option value="" className="bg-dark">
+                      Select Meal Type
+                    </option>
+                    <option value="breakfast" className="bg-dark">
+                      Breakfast
+                    </option>
+                    <option value="lunch" className="bg-dark">
+                      Lunch
+                    </option>
+                    <option value="dinner" className="bg-dark">
+                      Dinner
+                    </option>
+                    <option value="snack" className="bg-dark">
+                      Snack
+                    </option>
                   </Field>
                   <ErrorMessage
                     name="mealType"
